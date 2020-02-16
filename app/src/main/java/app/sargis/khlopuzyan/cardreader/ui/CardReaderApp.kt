@@ -1,5 +1,6 @@
 package app.sargis.khlopuzyan.cardreader.ui
 
+import android.content.Context
 import app.sargis.khlopuzyan.cardreader.BuildConfig
 import app.sargis.khlopuzyan.cardreader.di.component.DaggerAppComponent
 import dagger.android.AndroidInjector
@@ -19,7 +20,19 @@ class CardReaderApp : DaggerApplication() {
         }
     }
 
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> = DaggerAppComponent
-        .factory()
-        .create(this)
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
+
+        context = this
+
+        return DaggerAppComponent
+            .factory()
+            .create(this)
+    }
+
+    companion object {
+
+        private lateinit var context: Context
+
+        fun getContext() = context
+    }
 }
